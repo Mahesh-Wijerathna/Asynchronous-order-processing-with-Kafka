@@ -58,6 +58,12 @@ This project demonstrates an asynchronous order processing system using Apache K
    docker-compose up --build 
    ```
 
+## View Logs in separate interfaces
+Navigate to docker compose file location and run the following commands to view logs for each application:
+docker compose logs producer-app --follow --tail=10
+docker compose logs consumer-app --follow --tail=10
+docker compose logs dlq-consumer-app --follow --tail=10
+
 4. **Access Kafka UI**:
    Open http://localhost:8082 in your browser to monitor topics, messages, and consumers.
 
