@@ -1,6 +1,13 @@
+##
+- **Name**: Wijerathna W.M.M.T
+- **Registration Number**: EG/2020/4291
+##
+
 # Asynchronous Order Processing with Kafka
 
 This project demonstrates an asynchronous order processing system using Apache Kafka, Zookeeper, Schema Registry, and Kafka UI. It includes a producer that generates orders, a consumer that processes them with retry logic and dead-letter queue (DLQ) handling, and a DLQ consumer for monitoring failed messages.
+
+
 
 ## Architecture
 
