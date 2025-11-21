@@ -68,4 +68,16 @@ services:
     environment:
       KAFKA_BOOTSTRAP_SERVERS: broker:29092
       SCHEMA_REGISTRY_URL: http://schema-registry:8081
-    command: ["java", "-jar", "app.jar", "com.assignment.OrderProducer"]
+    command: ["java", "-cp", "app.jar", "com.assignment.OrderProducer"]
+
+  consumer:
+    build: .
+    depends_on:
+      broker:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: broker:29092
+      SCHEMA_REGISTRY_URL: http://schema-registry:8081
+    command: ["java", "-cp", "app.jar", "com.assignment.OrderConsumer"]
