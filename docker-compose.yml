@@ -22,7 +22,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       DISABLE_PREFLIGHT_CHECKS: "true"
     healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 9092 || exit 1"]
+      test: ["CMD-SHELL", "nc -z localhost 9092 || exit -1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -39,7 +39,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'broker:29092'
       DISABLE_PREFLIGHT_CHECKS: "true"
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8081/ || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/ || exit -1"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -57,3 +57,15 @@ services:
     depends_on:
       - broker
       - schema-registry
+
+  producer:
+    build: .
+    depends_on:
+      broker:
+        condition: service_healthy
+      schema-registry:
+        condition: service_healthy
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: broker:29092
+      SCHEMA_REGISTRY_URL: http://schema-registry:8081
+    command: ["java", "-jar", "app.jar", "com.assignment.OrderProducer"]
